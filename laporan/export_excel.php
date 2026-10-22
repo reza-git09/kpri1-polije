@@ -164,101 +164,80 @@ if ($jenis_laporan == 'pinjaman') {
 echo "</tr>";
 
 
-// ================= DATA =================
+
+ // ================= DATA =================
 $no = 1;
 $total_nominal = 0;
 
-if(mysqli_num_rows($data_laporan) > 0):
+if (mysqli_num_rows($data_laporan) > 0) {
 
-    while($row = mysqli_fetch_assoc($data_laporan)):
+    while ($row = mysqli_fetch_assoc($data_laporan)) {
 
         echo "<tr>";
-
-        echo "<td>".$no++."</td>";
+        echo "<td>" . $no++ . "</td>";
 
         if ($jenis_laporan == 'pinjaman') {
 
             echo "
-            <td>".date('d/m/Y', strtotime($row['tanggal']))."</td>
-
-            <td>".htmlspecialchars($row['nama'])."</td>
-
-            <td>".htmlspecialchars($row['nama_barang'])."</td>
-
+            <td>" . date('d/m/Y', strtotime($row['tanggal'])) . "</td>
+            <td>" . htmlspecialchars($row['nama']) . "</td>
+            <td>" . htmlspecialchars($row['nama_barang']) . "</td>
             <td style=\"mso-number-format:'#,##0';\">
-                Rp ".number_format($row['harga'], 0, ',', '.')."
+                Rp " . number_format($row['harga'], 0, ',', '.') . "
             </td>
-
-            <td>".$row['jumlah']."</td>
-
-            <td>".ucfirst($row['status'])."</td>";
+            <td>" . $row['jumlah'] . "</td>
+            <td>" . ucfirst($row['status']) . "</td>";
 
         } elseif ($jenis_laporan == 'simpanan') {
 
             $total_nominal += $row['nominal'];
 
             echo "
-            <td>".date('d/m/Y', strtotime($row['tanggal']))."</td>
-
-            <td>".htmlspecialchars($row['nama'])."</td>
-
-            <td>Simpanan ".htmlspecialchars($row['jenis_simpanan'])."</td>
-
+            <td>" . date('d/m/Y', strtotime($row['tanggal'])) . "</td>
+            <td>" . htmlspecialchars($row['nama']) . "</td>
+            <td>Simpanan " . htmlspecialchars($row['jenis_simpanan']) . "</td>
             <td style=\"mso-number-format:'#,##0';\">
-                Rp ".number_format($row['nominal'], 0, ',', '.')."
+                Rp " . number_format($row['nominal'], 0, ',', '.') . "
             </td>";
 
         } elseif ($jenis_laporan == 'gudang') {
 
             echo "
-            <td>".$row['id_barang']."</td>
-
-            <td>".htmlspecialchars($row['nama_barang'])."</td>
-
-            <td>".$row['stok']."</td>
-
-            <td>".$row['satuan']."</td>";
+            <td>" . $row['id_barang'] . "</td>
+            <td>" . htmlspecialchars($row['nama_barang']) . "</td>
+            <td>" . $row['stok'] . "</td>
+            <td>" . htmlspecialchars($row['satuan']) . "</td>";
         }
 
         echo "</tr>";
-
-    endwhile;
-
+    }
 
     // ================= TOTAL SIMPANAN =================
-    if($jenis_laporan == 'simpanan') {
-
+    if ($jenis_laporan == 'simpanan') {
         echo "
         <tr>
-
-            <td colspan='4'
+            <td colspan='3'
                 style='text-align:right;font-weight:bold;'>
                 TOTAL
             </td>
-
             <td style='font-weight:bold;'>
-                Rp ".number_format($total_nominal, 0, ',', '.')."
+                Rp " . number_format($total_nominal, 0, ',', '.') . "
             </td>
-
         </tr>";
     }
 
-else:
+} else {
 
     echo "
     <tr>
-        <td colspan='$colspan'
-            style='text-align:center;'>
+        <td colspan='$colspan' style='text-align:center;'>
             Data tidak ditemukan
         </td>
     </tr>";
-
-endif;
-
+}
 
 // ================= PENUTUP =================
 echo "</table>";
 
 exit;
-?>
-```
+
