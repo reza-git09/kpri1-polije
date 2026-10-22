@@ -1,4 +1,3 @@
-```php
 <?php
 // 🔥 WAJIB PALING ATAS
 while (ob_get_level()) {
